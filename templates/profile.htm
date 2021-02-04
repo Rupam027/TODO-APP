@@ -4,10 +4,22 @@
 <meta charset = "utf-18"/> 
 <link href="/static/bootstrap.css" rel="stylesheet"/> 
 <svg xmlns="/static/plus-circle-fill.svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16"></svg>
+<style> 
+.image-setter
+{ 
 
+background-image : url(/static/todo.jpeg) ; 
+height : 100% ; 
+background-repeat : no-repeat ; 
+background-position : center ; 
+background-size : cover ; 
+}
+
+
+</style>
 </head> 
 
-<body> 
+<body class = "image-setter" > 
 
 <header class="h2" style="background-color : #FF0000;"> <center> <h2> TODO - EFFECTIVE TOOL TO ORGANISE YOUR TASK  </h2>  </center> </header> 
 
@@ -27,23 +39,23 @@
 <br/> 
 
 
-<table class="table table-hover table-bordered" style="margin:auto ; width:500px;">
+<table class="table table-hover table-bordered table-dark" style="margin:auto ; width:500px;">
 <thead>
 <tr> 
 <th> TASK </th> 
-<th> IMMEDIATE </th> 
+<th> URGENCY </th> 
 <th> DEADLINE </th>
 </tr>  
 
 </thead> 
 
-
+{% for x in data %}
 <tr> 
-<td>  </td> 
-<td>   </td>
-<td> <b>   </b> </td> 
+<td> {{x["task"]}} </td> 
+<td> {{x["urgency"]}}  </td>
+<td> <b> {{x["deadline"]}}  </b> </td> 
 </tr> 
-
+{% endfor %}
 
 </table>
 
@@ -75,12 +87,12 @@
       <div class="modal-body">
 	    <div class="form-group">
 	    <label class="text-primary"> TASK NAME  </label> 
-        <input type="text" name="task" class="form-control"/> 
+        <input type="text" name="task" class="form-control" required="required"/> 
 		</div>
 		
 		<div class="form-group">
 		<label class="text-primary"> SET DEADLINE   </label> 
-        <input type="date" name="deadline" class="form-control" /> 
+        <input type="date" name="deadline" class="form-control" required="required" /> 
 		</div>
 		
 		<div class="form-group">
@@ -98,8 +110,8 @@
       </div>
       
 	  <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success btn-light">Save changes</button>
       </div>
 	 </form>
     </div>
