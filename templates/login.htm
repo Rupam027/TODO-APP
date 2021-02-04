@@ -1,0 +1,55 @@
+<html> 
+<head> 
+<title> </title> 
+<meta charset = "utf-18"/> 
+<meta name="viewport" content="width:device:width initial-scale:1.0" /> 
+<link href='/static/bootstrap.css' rel="stylesheet"/>
+</head> 
+
+<body style="background-color : #5882FA">
+
+
+<div class="container-fluid-lg container-fluid-sm container-fluid-md" > 
+<header class="h2" style="padding-bottom : 100px" > <center style="background-color : #FF0000;">  TODO'S FOR YOUR DODO'S  </center> </header> 
+
+<nav class="navbar navbar-dark navbar-expand-lg"> 
+
+<ul class="navbar-nav" > 
+<li class="nav-item"> <a class="nav-link" href="/" > HOME </a>  </li> 
+<li class="nav-item"> <a class="nav-link" href="/register"> REGISTER </a>  </li> 
+<li class="nav-item active"> <a class="nav-link" href="/login"> LOGIN  </a> </li>  
+
+
+</ul> 
+
+</nav>  
+
+ 
+<form style=" margin: auto ; width : 500px; height : 800px;" action = "/profile" method = "post" > 
+ 
+<div> 
+<label class = "text-danger text-uppercase"> {{error}} </label> 
+</div> 
+
+<br/>
+
+<div class="form-group" style="padding-bottom : 50px;" > 
+<label for="user"  > <b> USERNAME </b> </label> 
+<input name="user" id="user"  class="form-control" placeholder="Enter Username" required />  
+</div>
+
+
+<div class="form-group" style="padding-bottom : 50px;">
+<label for="pass"> <B> PASSWORD </b> </label> 
+<input name="pass" id="pass" type="password" class="form-control" placeholder="Enter password" required /> 
+</div>
+
+<input class="btn btn-success"  style="width:500px;" type="submit"  value = "LOGIN" /> 
+
+</form>  
+
+
+</div>
+</body> 
+
+</html> 
