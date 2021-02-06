@@ -1,11 +1,1 @@
-[
-
-{
-"name" : "Rupam" ,
-"user" : "Rup" ,
-"password" : "2000" , 
- "activity" : [{"task" :  "assignment" ,  "urgency" : "immediate" , "deadline" : "3-02-2021"}] 
-}
-
-
-]
+[{"name": "Rupam Dasgupta", "user": "Rup", "password": "2000", "activity": [{"task": "coding", "urgency": "Done by end of week", "deadline": "2021-02-07"}]}]

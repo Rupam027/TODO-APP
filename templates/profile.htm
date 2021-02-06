@@ -24,12 +24,17 @@ background-size : cover ;
 <header class="h2" style="background-color : #FF0000;"> <center> <h2> TODO - EFFECTIVE TOOL TO ORGANISE YOUR TASK  </h2>  </center> </header> 
 
 <nav class="navbar navbar-dark navbar-expand-lg navbar-expand-md"> 
+<button class="navbar-toggler" data-toggle="collapse" data-target = "#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
 
+<div class="collapse navbar-collapse" id="mynavbar">
 <ul class="navbar-nav" > 
 <li class="nav-item"> <a class="nav-link" href="/" > HOME </a>  </li> 
 <li class="nav-item"> <a class="nav-link" href="/register"> REGISTER </a>  </li> 
 <li class="nav-item"> <a class="nav-link" href="/login"> LOGIN  </a> </li>  
 </ul> 
+</div> 
 
 </nav>  
 
@@ -49,8 +54,15 @@ background-size : cover ;
 
 </thead> 
 
+{% if data|length == 0 %}
+<tr>
+<td colspan="3" class="bg-info" ><center> <i>  No pending task </i> </center> </td> 
+</tr> 
+
+{% else %} 
+
 {% for x in data %}
-<tr> 
+<tr class="bg-primary"> 
 <td> {{x["task"]}} </td> 
 <td> {{x["urgency"]}}  </td>
 <td> <b> {{x["deadline"]}}  </b> </td> 
@@ -58,6 +70,7 @@ background-size : cover ;
 {% endfor %}
 
 </table>
+{% endif %} 
 
  
 <br/> 

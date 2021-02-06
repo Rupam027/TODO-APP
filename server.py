@@ -1,20 +1,27 @@
-from flask import Flask , render_template , request , redirect , url_for
+from flask import Flask , render_template , request , redirect , url_for , session
 import json
+from dbcheck import *
 
 app =   Flask(__name__) 
-
+app.secret_key = 'az75z8962df1235s'
 
 message = ''
-
+exist = ''
 
 @app.route('/')
 def home():
+    global message
+    global exist
+    message = ''
     return render_template('index.htm') 
+
 
 
 @app.route('/register')
 def register(): 
-    return render_template('reg.htm') 
+    
+    return render_template('reg.htm' ,error=exist) 
+
 
 @app.route('/login')    
 def login():
@@ -22,30 +29,94 @@ def login():
     return render_template('login.htm' ,error=message) 
 
 
+
+@app.route('/create-account' , methods=['POST'])
+def create():
+    global exist
+    data = request.form 
+    name = data['full']
+    user = data['user']
     
-@app.route('/profile' ,methods = ['POST'])
+    password = data['pass'] 
+    c = check(user)
+    if c == -1: 
+        exist = ''
+        d = {} 
+        d["name"] = name 
+        d["user"] = user 
+        d["password"] = password 
+        d["activity"] = []
+        
+        f1 = open('data.json' , 'r')  
+        db = json.load(f1)
+        db.append(d)
+        f2 = open('data.json' , 'w')
+        json.dump(db , f2)
+        
+        
+        return redirect(url_for('home'))
+    else: 
+        exist = 'Username already exist' 
+        return redirect(url_for('register'))
+
+
+
+@app.route('/profile')
 def profile():
+    username = session['user'] 
+    user = check(username)
+    activity = user["activity"]
     
-    global message 
+    return render_template('profile.htm' ,user=username,data=activity) 
+    
+
+
+@app.route('/check' ,methods = ['POST'])    
+def check_cred(): 
+    global message
     data = request.form
     usr = data['user']
     pas = data['pass']
+    user = check(usr) 
+    if user != -1:
+        username = user['user']
+        password = user['password']
+        
     
-    f = open('data.json') 
-    db = json.load(f) 
-    user1 = db[0]
-    activity = user1["activity"]
-    
-    if (usr == user1['user']) and (pas == user1['password']) : 
-        message = ''
-        return render_template('profile.htm' ,user=usr,data=activity)
+        if pas == password: 
+            message = ''
+            session['user'] = username  
+            return redirect(url_for('profile'))
+        else: 
+            message = 'Invalid Username and password' 
+            return redirect(url_for('login'))
+            
     else : 
         message = 'Invalid Username and password'
         return redirect(url_for('login'))
-     
-        
+    
+@app.route('/create' , methods=['POST']) 
+def createtask():
+    task_info = request.form 
+    taskname = task_info["task"]
+    deadline = task_info["deadline"] 
+    urgency  = task_info["urgent"]
+    username = session["user"] 
+    activity = {} 
+    
+    activity["task"] = taskname  
+    activity["urgency"] = urgency
+    activity["deadline"] = deadline 
+    
+    update_activity(username , activity) 
+    return redirect(url_for('profile'))
+    
+    
     
 
+    
+
+    
 if __name__ == '__main__' : 
     
     app.run(debug = True)
