@@ -17,6 +17,7 @@ background-size : cover ;
 
 
 </style>
+<script src="/static/task.js" type="text/javascript"></script>
 </head> 
 
 <body class = "image-setter" > 
@@ -102,7 +103,7 @@ background-size : cover ;
         </button>
 		
       </div>
-	  <form action="/create" method="post"> 
+	  <form id="create"  method="post"> 
       <div class="modal-body">
 	    <div class="form-group">
 	    <label class="text-primary"> TASK NAME  </label> 
@@ -115,14 +116,16 @@ background-size : cover ;
 		</div>
 		
 		<div class="form-group">
-		<label class="text-primary"> URGENCY </label> 
-        <select type="custom-select" name="urgent" id="urgent" onblur="validate()" > 
-		<option selected>CHOOSE ANY ONE</option>
-		<option> Immediate </option>
-		<option> Should be done by today </option>
-		<option> Done by end of week </option>
-		<option> Can be done anytime </option>
+		<label class="text-primary"> URGENCY </label>
+		
+        <select type="custom-select" name="urgent" id="urgent"  > 
+		<option selected value="0" >CHOOSE ANY ONE</option>
+		<option value="1" > Immediate </option>
+		<option value="2"> Should be done by today </option>
+		<option value="3"> Done by end of week </option>
+		<option value="4"> Can be done anytime </option>
 		</select> 
+		
 		</div>
 		
 		
@@ -130,7 +133,7 @@ background-size : cover ;
       
 	  <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-success btn-light disabled" id="save" >Save changes</button>
+        <button type="button" class="btn btn-success btn-light" onclick="check();" id="save" >Save changes</button>
       </div>
 	 </form>
     </div>
@@ -141,7 +144,8 @@ background-size : cover ;
 <script src="/static/jquery.js" type="text/javascript"></script>
 <script src="/static/popper.js" type="text/javascript"></script>
 <script src="/static/bootstrap.js" type="text/javascript"></script>
-<script src="/static/task.js" type="text/javascript"></script>
+
+
 
 </body> 
 </html>

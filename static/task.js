@@ -1,9 +1,8 @@
-function validate()
+function check()
 {
-	var urgent = document.getElementById("urgent").value ; 
-	if(urgent != "CHOOSE ANY ONE")
-	document.getElementById("save").value = "btn btn-success btn-light" ;
-
+	console.log("Inside validate") ;
+	urgent = document.getElementById("urgent").value ; 
+	console.log(urgent) ; 
+	
 }
 
-	
