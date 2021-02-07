@@ -29,7 +29,16 @@ def update_activity(username , activity):
     f2=open('data.json' , 'w')
     json.dump(db , f2)  
     
-    
+def delete_activity(username , index):
+    file = open('data.json' , 'r') 
+    db = json.load(file)
+    for x in db: 
+        if x["user"] == username:
+            c = x["activity"].pop(index) 
+            break 
+    f2=open('data.json' , 'w')
+    json.dump(db , f2) 
+        
     
 if __name__ == '__main__': 
     print(check('prasad'))

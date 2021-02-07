@@ -111,6 +111,15 @@ def createtask():
     update_activity(username , activity) 
     return redirect(url_for('profile'))
     
+@app.route('/delete' , methods=['POST'])
+def deletetask():
+    username = session["user"]
+    form = request.form
+    activity_index = int(form["delete"])
+    delete_activity(username , activity_index)
+    return redirect(url_for('profile')) 
+    
+    
     
     
 

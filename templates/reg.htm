@@ -34,7 +34,7 @@
   
 
 
-<form style="margin:auto ; width:500px;"  action="/create-account" method="post" > 
+<form style="margin:auto ; width:500px;"  action="." method="post"  id="form"> 
 
 <div> 
 <label class = "text-danger text-uppercase"> {{error}} </label> 
@@ -51,7 +51,7 @@
 
 
 <div class="form-group" >
-<label for="full"> <B> NAME </b> </label> 
+<label for="full"> <b> NAME </b> </label> 
 <input name="full" id="full" class="form-control" placeholder="Enter full name"  required = "required"  /> 
 </div>
 <br>
@@ -69,14 +69,14 @@
 
 <div class="form-group" >
 <label for="com"  required = "required" > <b> CONFIRM PASSWORD </b> </label> 
-<input name="com" id="com"  class="form-control"  type="password" placeholder="Confirm password"   />  
-<label id="mismatch" class="alert-warning" ></label> 
+<input name="com" id="com"  class="form-control"  type="password" placeholder="Confirm password"  onblur="confirm()"  />  
+<label id="mismatch" class="alert-warning"  ></label> 
 </div> 
 
 <br>
 
 
-<button class="btn btn-success"  style="width:500px;" type="submit" > REGISTER  </button> 
+<button class="btn btn-success"  style="width:500px;" type="submit"  > REGISTER  </button> 
 
 </form>  
 
