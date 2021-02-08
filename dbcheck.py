@@ -1,8 +1,8 @@
 import json
 
 
-
 def insert(d): 
+    
     f1 = open('data.json' , 'r')  
     db = json.load(f1)
     db.append(d)
@@ -48,7 +48,7 @@ def delete_activity(username , index):
             break 
     f2=open('data.json' , 'w')
     json.dump(db , f2) 
-        
+    
     
 if __name__ == '__main__': 
     print(check('prasad'))

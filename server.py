@@ -124,6 +124,11 @@ def deletetask():
     activity_index = int(form["delete"])
     delete_activity(username , activity_index)
     return redirect(url_for('profile')) 
+
+@app.route('/logout')   
+def logout():
+    session.pop("user")
+    return redirect(url_for('home'))
     
     
     
