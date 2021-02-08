@@ -13,6 +13,7 @@ def home():
     global message
     global exist
     message = ''
+    exist = ''
     return render_template('index.htm') 
 
 
@@ -25,7 +26,14 @@ def register():
 
 @app.route('/login')    
 def login():
+    
     global message
+    if "user" in session:
+        username = session['user'] 
+        user = check(username)
+        activity = user["activity"]
+        return render_template('profile.htm' ,user=username,data=activity)
+     
     return render_template('login.htm' ,error=message) 
 
 
@@ -47,14 +55,10 @@ def create():
         d["password"] = password 
         d["activity"] = []
         
-        f1 = open('data.json' , 'r')  
-        db = json.load(f1)
-        db.append(d)
-        f2 = open('data.json' , 'w')
-        json.dump(db , f2)
+        insert(d) ; 
+        session["user"] = user ; 
         
-        
-        return redirect(url_for('home'))
+        return redirect(url_for('profile'))
     else: 
         exist = 'Username already exist' 
         return redirect(url_for('register'))
@@ -63,12 +67,14 @@ def create():
 
 @app.route('/profile')
 def profile():
-    username = session['user'] 
-    user = check(username)
-    activity = user["activity"]
-    
-    return render_template('profile.htm' ,user=username,data=activity) 
-    
+    if "user" in session:
+        username = session['user'] 
+        user = check(username)
+        activity = user["activity"]
+        
+        return render_template('profile.htm' ,user=username,data=activity) 
+    else:
+        return redirect(url_for('register'))
 
 
 @app.route('/check' ,methods = ['POST'])    

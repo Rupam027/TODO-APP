@@ -1,5 +1,15 @@
 import json
 
+
+
+def insert(d): 
+    f1 = open('data.json' , 'r')  
+    db = json.load(f1)
+    db.append(d)
+    f2 = open('data.json' , 'w')
+    json.dump(db , f2)
+    
+    
 def check(user):
     
     file = open('data.json') 
@@ -34,7 +44,7 @@ def delete_activity(username , index):
     db = json.load(file)
     for x in db: 
         if x["user"] == username:
-            c = x["activity"].pop(index) 
+            c = x["activity"].pop((index - 1)) 
             break 
     f2=open('data.json' , 'w')
     json.dump(db , f2) 
