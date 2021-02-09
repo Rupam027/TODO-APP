@@ -99,10 +99,10 @@ function check()
 <tr class="bg-primary"> 
 {% set count = count + 1 %}
 <td> {{loop.index}} </td> 
-<td> {{x["task"]}} </td> 
-<td> {{x["urgency"]}}  </td>
-<td> <b> {{x["deadline"]}}  </b> </td>
-<td> <button  class="btn btn-lg btn-danger" name="delete"  type="submit" value="{{loop.index}}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+<td> {{x[1]}} </td> 
+<td> {{x[2]}}  </td>
+<td> <b> {{x[3]}}  </b> </td>
+<td> <button  class="btn btn-lg btn-danger" name="delete"  type="submit" value="{{x[0]}}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
  <i class="bi bi-trash-fill"></i>
  </svg> </button>  </td>
@@ -147,7 +147,7 @@ function check()
 		
 		<div class="form-group">
 		<label class="text-primary"> SET DEADLINE   </label> 
-        <input type="date" name="deadline" class="form-control" required="required" /> 
+        <input type="date" name="deadline" class="form-control" required="required" min="{{date}}" /> 
 		</div>
 		
 		<div class="form-group">

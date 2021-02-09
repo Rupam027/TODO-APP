@@ -1,12 +1,15 @@
 from flask import Flask , render_template , request , redirect , url_for , session
 import json
 from dbcheck import *
+from passlib.hash import pbkdf2_sha256
+import datetime
 
 app =   Flask(__name__) 
 app.secret_key = 'az75z8962df1235s'
 
 message = ''
 exist = ''
+
 
 @app.route('/')
 def home():
@@ -29,10 +32,8 @@ def login():
     
     global message
     if "user" in session:
-        username = session['user'] 
-        user = check(username)
-        activity = user["activity"]
-        return render_template('profile.htm' ,user=username,data=activity)
+   
+        return redirect(url_for('profile'))
      
     return render_template('login.htm' ,error=message) 
 
@@ -55,8 +56,8 @@ def create():
         d["password"] = password 
         d["activity"] = []
         
-        insert(d) ; 
-        session["user"] = user ; 
+        insert(d)  
+        session["user"] = user  
         
         return redirect(url_for('profile'))
     else: 
@@ -71,8 +72,10 @@ def profile():
         username = session['user'] 
         user = check(username)
         activity = user["activity"]
-        
-        return render_template('profile.htm' ,user=username,data=activity) 
+        date = str(datetime.datetime.now())
+        date = date.split(' ')[0]
+        print(date)
+        return render_template('profile.htm' ,user=username,data=activity,date=date) 
     else:
         return redirect(url_for('register'))
 
@@ -88,8 +91,8 @@ def check_cred():
         username = user['user']
         password = user['password']
         
-    
-        if pas == password: 
+        
+        if pbkdf2_sha256.verify(pas , password): 
             message = ''
             session['user'] = username  
             return redirect(url_for('profile'))
