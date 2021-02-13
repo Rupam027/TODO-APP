@@ -15,6 +15,7 @@ def insert(d):
     formatted = insert_query.format(d["user"] , d["name"] ,d["password"] , d["email"])
     conn.execute(formatted) 
     conn.commit()
+    conn.close()
     
     
     
@@ -41,7 +42,7 @@ def check(user):
         
     else:
         return -1
-    
+    conn.close()
         
         
 def update_activity(username , activity):
@@ -52,6 +53,7 @@ def update_activity(username , activity):
     formatted = insert_query.format(activity["task"] , activity["urgency"] ,activity["deadline"] ,username)
     conn.execute(formatted) 
     conn.commit()
+    conn.close()
     
     
 def delete_activity(username , index):
@@ -62,6 +64,7 @@ def delete_activity(username , index):
     formatted = delete_query.format(username , index)
     conn.execute(formatted) 
     conn.commit()
+    conn.close()
     
 def update_password(user , password):
     conn = sqlite3.connect('todo.db')
@@ -71,6 +74,7 @@ def update_password(user , password):
     formatted = update_query.format(password , user)
     conn.execute(formatted) 
     conn.commit()
+    conn.close()
 
     
     
