@@ -9,10 +9,10 @@ from passlib.hash import pbkdf2_sha256
 def insert(d): 
     
     conn = sqlite3.connect('todo.db')
-    insert_query = "INSERT INTO User(username,Name,password) VALUES('{}' , '{}' , '{}');"
+    insert_query = "INSERT INTO User(username,Name,password ,email) VALUES('{}' , '{}' , '{}' , '{}');"
     d["password"] = pbkdf2_sha256.hash(d["password"])
     
-    formatted = insert_query.format(d["user"] , d["name"] ,d["password"])
+    formatted = insert_query.format(d["user"] , d["name"] ,d["password"] , d["email"])
     conn.execute(formatted) 
     conn.commit()
     
@@ -23,9 +23,9 @@ def check(user):
     
     d = {}
     conn = sqlite3.connect('todo.db')
-    select_userquery = "SELECT * FROM User WHERE username = '{}' ;"
+    select_userquery = "SELECT * FROM User WHERE username = '{}' OR email = '{}' ;"
     select_activity  = "SELECT * FROM Activity WHERE user = '{}' ;"
-    formatted = select_userquery.format(user) 
+    formatted = select_userquery.format(user , user , 1) 
     formatted1 = select_activity.format(user)
     
     
@@ -62,6 +62,16 @@ def delete_activity(username , index):
     formatted = delete_query.format(username , index)
     conn.execute(formatted) 
     conn.commit()
+    
+def update_password(user , password):
+    conn = sqlite3.connect('todo.db')
+    password = pbkdf2_sha256.hash(password)
+    update_query = "UPDATE User SET password = '{}' WHERE  username = '{}';"
+    
+    formatted = update_query.format(password , user)
+    conn.execute(formatted) 
+    conn.commit()
+
     
     
     

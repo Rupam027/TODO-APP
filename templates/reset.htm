@@ -1,0 +1,40 @@
+<html> 
+<head> 
+<title> </title> 
+<meta charset = "utf-18"/> 
+<meta name="viewport" content="width:device:width initial-scale:1.0" /> 
+<link href="/static/bootstrap.css" rel="stylesheet"/>
+</head> 
+
+<body style="background-image : url('/static/pic.jpeg');">
+
+
+<form  style="margin: auto ; width : 500px; box-shadow : 5px 10px 18px;  padding-left: 10px ; padding-right: 10px ; padding-bottom : 10px; background-color : #E6E6E6;"  action = "/email"  method = "post" > 
+ 
+<div> 
+<label class = "text-danger text-uppercase"> {{emailerror}}  </label> 
+</div> 
+
+<br/>
+
+<div class="form-group" style="padding-bottom : 50px;" > 
+<input name="email" id="email"  class="form-control" placeholder="Enter registered mail id" autocomplete="off" required />  
+<label class="text-muted">  *An email will be sent to your registered mail id* </label> 
+</div>
+
+<div class="form-row">
+<div class="col">
+<button class="btn btn-primary btn-block" type="submit"> RETURN TO LOGIN </button> 
+</div>
+
+<div class="col">
+<button class="btn btn-success btn-block" type="submit"> SEND PASSWORD RESET LINK </button> 
+</div>
+
+<div>
+</form>
+
+
+
+</body>
+</html>
