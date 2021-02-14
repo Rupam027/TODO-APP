@@ -31,7 +31,9 @@
 <form style=" margin: auto ; width : 500px; box-shadow : 5px 10px 18px;  padding-left: 10px ;  padding-right: 10px ; padding-bottom : 10px; background-color : #E6E6E6;" action = "/check"  method = "post" > 
  
 <div> 
-<label class = "text-danger text-uppercase"> {{error}} </label> 
+{% for message in get_flashed_messages() %}
+<label class = "text-danger text-uppercase"> {{message}} </label> 
+{% endfor %}
 </div> 
 
 <br/>

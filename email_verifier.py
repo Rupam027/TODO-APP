@@ -8,7 +8,7 @@ import smtplib
 
 
 
-def send_confirmation_mail(user_email , otp , link):
+def send_confirmation_mail(user_email , otp):
     sender_id = 'dopplerlife945@gmail.com' 
     password = 'Rupam2000' 
     receiver_id = user_email
@@ -20,7 +20,7 @@ def send_confirmation_mail(user_email , otp , link):
     email['To'] =  receiver_id 
     email['Subject'] = 'EMAIL VERICATION' 
 
-    body = 'OTP to reset your password is : {} . Click on this {} to reset your password . This is a system generated mail. Please do not reply.'.format(otp , link)
+    body = 'OTP to reset your password is : {} . This is a system generated mail. Please do not reply.'.format(otp)
 
     email.attach(MIMEText(body , 'plain'))
     

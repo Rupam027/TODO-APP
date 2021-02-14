@@ -75,6 +75,39 @@ def update_password(user , password):
     conn.execute(formatted) 
     conn.commit()
     conn.close()
+    
+def pushotp(user , otp):
+    conn = sqlite3.connect('todo.db')
+    push = "INSERT INTO UserOTP(user , otp) VALUES('{}' , '{}');" 
+    formatted = push.format(user , otp)
+    conn.execute(formatted) 
+    conn.commit()
+    conn.close()
+    
+def getotp(user):
+    conn = sqlite3.connect('todo.db')
+    select = "SELECT otp FROM UserOTP WHERE user = '{}' ;" 
+    formatted = select.format(user)
+    otp = list(conn.execute(formatted))
+    if(len(otp) == 0):
+        conn.close()
+        return None
+    else:
+        otp = otp[0][0]
+        conn.close()
+        return otp  
+    
+def popotp(user):
+    conn = sqlite3.connect('todo.db')
+    delete = "DELETE FROM UserOTP WHERE user = '{}' ;" 
+    formatted = delete.format(user)
+    conn.execute(formatted) 
+    conn.commit()
+    conn.close()
+    
+    
+    
+    
 
     
     

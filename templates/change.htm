@@ -71,9 +71,12 @@ function  confirm()
 </div> 
 
 <div class="form-group" style="padding-bottom : 50px;" > 
-<input name="otp" id="otp"  type="tel"  class="form-control" onblur="password_match()" placeholder="Enter OTP" autocomplete="off" required />  
-<label class="alert-warning"  >{{otperror}}</label> 
+<input name="otp" id="otp"  type="tel"  class="form-control"  placeholder="Enter OTP" autocomplete="off" required />  
+{% for message in get_flashed_messages() %}
+<label class = "text-danger text-uppercase"> {{message}} </label> 
+{% endfor %} 
 </div> 
+<label class="text-muted"> Only one chance is allowed . please enter correctly </label>
 
 <button id="reset" class="btn btn-success"  type="button" onclick="confirm()"> RESET PASSWORD </button>
 </form>

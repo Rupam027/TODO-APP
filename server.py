@@ -1,4 +1,4 @@
-from flask import Flask , render_template , request , redirect , url_for , session
+from flask import Flask , render_template , request , redirect , url_for , session , flash
 import json
 from dbcheck import *
 from passlib.hash import pbkdf2_sha256
@@ -9,25 +9,8 @@ import random
 app =   Flask(__name__) 
 app.secret_key = 'az75z8962df1235s'
 
-message = ''
-exist = ''
-email_error = ''
-otp_error = ''
-otp = None
-
 @app.route('/')
 def home():
-    global email_error
-    global message
-    global exist
-    global invalid 
-    global otp_error 
-    
-    otp_error = ''
-    email_error = ''
-    message = ''
-    exist = ''
-   
     return render_template('index.htm') 
 
 
@@ -47,7 +30,7 @@ def login():
         return redirect(url_for('profile'))
     
     else:
-        return render_template('login.htm' ,error=message) 
+        return render_template('login.htm') 
     
         
 
@@ -70,7 +53,7 @@ def create():
     c2 = check(email)
     if (c1 == -1) and (c2 == -1): 
         
-        exist = ''
+        
         d = {} 
         d["name"] = name 
         d["user"] = user 
@@ -84,7 +67,7 @@ def create():
         
         return redirect(url_for('profile'))
     else: 
-        exist = 'Username already exist' 
+        flash('Username already exist') 
         return redirect(url_for('register'))
     
 
@@ -102,7 +85,7 @@ def profile():
         print(date)
         return render_template('profile.htm' ,user=username,data=activity,date=date) 
     else:
-        return redirect(url_for('register'))
+        return redirect(url_for('login'))
 
 
 @app.route('/check' ,methods = ['POST'])    
@@ -118,15 +101,15 @@ def check_cred():
         
         
         if pbkdf2_sha256.verify(pas , password): 
-            message = ''
+            
             session['user'] = username  
             return redirect(url_for('profile'))
         else: 
-            message = 'Invalid credentials' 
+            flash('Invalid credentials') 
             return redirect(url_for('login'))
             
     else : 
-        message = 'Invalid credentials'
+        flash('Invalid credentials')
         return redirect(url_for('login'))
         
         
@@ -162,10 +145,8 @@ def logout():
     
 @app.route('/forgotpassword') 
 def forgotpassword():
-    global message 
-    message = ''
-    global email_error
-    return render_template('reset.htm' ,emailerror=email_error)
+    
+    return render_template('reset.htm')
  
     
 @app.route('/email' , methods = ['POST']) 
@@ -175,33 +156,39 @@ def send_mail():
     email = request.form["email"] 
     c = check(email) 
     if(c != -1):
+        
         user = c["user"]
-        email_error = '' 
-        link = "http://127.0.0.1:5000/reset/"+user
+        popotp(user)
+        link = "/reset/"+user
         otp = random.randint(1000 , 9999)
-        send_confirmation_mail(email , otp , link)
-        return redirect(url_for('forgotpassword'))
+        send_confirmation_mail(email , otp)
+        pushotp(user,otp)
+        return redirect(link)
     else:
-        email_error = 'EMAIL NOT REGISTERED' 
+        flash('EMAIL NOT REGISTERED')
         return redirect(url_for('forgotpassword'))
 
 @app.route('/reset/<username>') 
 def reset_password(username):
-    global otp_error
-    return render_template('change.htm' ,user=username,otperror=otp_error)
+    
+    return render_template('change.htm' ,user=username)
     
 @app.route('/changepassword' , methods = ['POST']) 
 def reset():
-    global otp 
-    global otp_error
+     
+    
     data = request.form
-    if int(data["otp"]) == otp: 
-        otp = None
-        otp_error = ''
+    user = data['user']
+    entered = int(data['otp'])
+    otp = getotp(user)
+    
+    if entered == otp: 
+        popotp(user)
         update_password(data["user"] , data["new"])
         return redirect(url_for('login'))
-    else: 
-        otp_error = "INVALID OTP"
+    else:
+        popotp(user)
+        flash('INVALID OTP')
         user = data["user"]
         rd = '/reset/'+user 
         return redirect(rd)
