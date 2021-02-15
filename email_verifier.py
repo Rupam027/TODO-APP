@@ -18,7 +18,7 @@ def send_confirmation_mail(user_email , otp):
     email = MIMEMultipart()
     email['From']= sender_id
     email['To'] =  receiver_id 
-    email['Subject'] = 'EMAIL VERICATION' 
+    email['Subject'] = 'RESET PASSWORD' 
 
     body = 'OTP to reset your password is : {} . This is a system generated mail. Please do not reply.'.format(otp)
 

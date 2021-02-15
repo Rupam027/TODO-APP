@@ -1,5 +1,4 @@
 from flask import Flask , render_template , request , redirect , url_for , session , flash
-import json
 from dbcheck import *
 from passlib.hash import pbkdf2_sha256
 import datetime
@@ -18,7 +17,7 @@ def home():
 @app.route('/register')
 def register(): 
     
-    return render_template('reg.htm' ,error=exist) 
+    return render_template('reg.htm') 
 
 
 @app.route('/login')    
@@ -151,8 +150,7 @@ def forgotpassword():
     
 @app.route('/email' , methods = ['POST']) 
 def send_mail(): 
-    global email_error
-    global otp
+    
     email = request.form["email"] 
     c = check(email) 
     if(c != -1):
@@ -197,7 +195,3 @@ def reset():
     
     
 
-    
-if __name__ == '__main__' : 
-    
-    app.run(debug = True)
