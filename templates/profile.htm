@@ -2,8 +2,8 @@
 <head> 
 <title> </title> 
 <meta charset = "utf-18"/> 
-<link href="/static/bootstrap.css" rel="stylesheet"/> 
-<svg xmlns="/static/plus-circle-fill.svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16"></svg>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
 <style> 
 .image-setter
 { 
@@ -47,7 +47,7 @@ function check()
 <header class="h2" style="background-color : #FF0000;"> <center> <h2> TODO - EFFECTIVE TOOL TO ORGANISE YOUR TASK  </h2>  </center> </header> 
 
 
-<nav > 
+<nav> 
 <a class="nav-link" href="/" > 
 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"  class="bi bi-arrow-left-short" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
@@ -55,16 +55,11 @@ function check()
 <i class="bi bi-arrow-left-short" width="60" height="60"></i>
 </svg> 
 </a>
-<a style="float : right; margin-right:10px ; " href="/logout"> 
-<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="red" class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z"/>
 
-<i class="bi bi-arrow-bar-right" width="60" height="60"></i>
-</svg>
-<br/>
-<span class="color : #FF0000;"> LOGOUT </span>
+<label style="font-size:30px; color:blue; float:right;">
+WELCOME {{user}}
+</label>
 
-</a> 
 </nav> 
 
 
@@ -72,7 +67,7 @@ function check()
 
 
 <div class="container">
-<label class="h4" style="background-color : blue ; "> WELCOME  {{user}} </label> 
+
 
 <br/> 
 
@@ -90,7 +85,7 @@ function check()
 
 {% if data|length == 0 %}
 <tr>
-<td colspan="4" class="bg-info" ><center> <i>  No pending task </i> </center> </td> 
+<td colspan="4" class="bg-info" ><center> <em>  No pending task </em> </center> </td> 
 </tr> 
 
 {% else %} 
@@ -176,9 +171,20 @@ function check()
 </div>
 
 
-<script src="/static/jquery.js" type="text/javascript"></script>
-<script src="/static/popper.js" type="text/javascript"></script>
-<script src="/static/bootstrap.js" type="text/javascript"></script>
+<a style="background-color:#2E9AFE ; position:absolute; bottom:10px; right:10px;"  href="/logout" > 
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="red" class="bi bi-arrow-bar-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 8a.5.5 0 0 0 .5.5h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L12.293 7.5H6.5A.5.5 0 0 0 6 8zm-2.5 7a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5z"/>
+
+<i class="bi bi-arrow-bar-right" width="60" height="60"></i>
+</svg>
+<br/>
+<span style="color:red"> LOGOUT </span>
+
+</a> 
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 
 

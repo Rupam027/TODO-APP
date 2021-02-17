@@ -5,13 +5,12 @@ from mysql import connector
     
 
 def insert(d): 
-    
-    conn = sqlite3.connect('todo.db')
-    insert_query = "INSERT INTO User(username,Name,password ,email) VALUES('{}' , '{}' , '{}' , '{}');"
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    insert_query = "INSERT INTO user(username,Name,password ,email) VALUES(%s , %s , %s , %s);"
     d["password"] = pbkdf2_sha256.hash(d["password"])
-    
-    formatted = insert_query.format(d["user"] , d["name"] ,d["password"] , d["email"])
-    conn.execute(formatted) 
+    val = (d["user"] , d["name"] ,d["password"] , d["email"])
+    mycursor = conn.cursor()
+    mycursor.execute(insert_query , val) 
     conn.commit()
     conn.close()
     
@@ -21,20 +20,29 @@ def insert(d):
 def check(user):
     
     d = {}
-    conn = sqlite3.connect('todo.db')
-    select_userquery = "SELECT * FROM User WHERE username = '{}' OR email = '{}' ;"
-    select_activity  = "SELECT * FROM Activity WHERE user = '{}' ;"
-    formatted = select_userquery.format(user , user , 1) 
-    formatted1 = select_activity.format(user)
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    select_userquery = "SELECT * FROM user WHERE username = %s OR email = %s ;"
+    select_activity  = "SELECT * FROM activity WHERE user = %s ;"
+    val1 = (user , user) 
+    val2 = (user ,)
+    mycursor = conn.cursor()
     
-    
-    ls = list(conn.execute(formatted))
-    ls1 = list(conn.execute(formatted1))
+    mycursor.execute(select_userquery , val1)
+    ls = []
+    for x in mycursor:
+        ls.append(x)
+        
+    mycursor.execute(select_activity , val2)
+    ls1 = []
+    for x in mycursor:
+        ls1.append(x)
+        
     if len(ls) > 0:
         d["name"] =  ls[0][1]
          
         d["user"] = ls[0][0]
         d["password"] = ls[0][2]
+        d["email"] = ls[0][3]
         d["activity"]= ls1
         return d
         
@@ -45,64 +53,73 @@ def check(user):
         
 def update_activity(username , activity):
     
-    conn = sqlite3.connect('todo.db')
-    insert_query = "INSERT INTO Activity(Taskname , Urgency ,Deadline ,user) VALUES('{}' , '{}' , '{}' , '{}');"
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    insert_query = "INSERT INTO activity(Taskname , Urgency ,Deadline ,user) VALUES(%s , %s , %s , %s);"
     
-    formatted = insert_query.format(activity["task"] , activity["urgency"] ,activity["deadline"] ,username)
-    conn.execute(formatted) 
+    val = (activity["task"] , activity["urgency"] ,activity["deadline"] ,username)
+    mycursor = conn.cursor()
+    mycursor.execute(insert_query , val) 
     conn.commit()
     conn.close()
     
     
 def delete_activity(username , index):
-    conn = sqlite3.connect('todo.db')
-    delete_query = "DELETE FROM Activity WHERE user='{}' AND id = '{}';"
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    delete_query = "DELETE FROM activity WHERE user=%s AND id = %s;"
     
     
-    formatted = delete_query.format(username , index)
-    conn.execute(formatted) 
+    val = (username , index)
+    mycursor = conn.cursor()
+    mycursor.execute(delete_query , val) 
     conn.commit()
     conn.close()
     
 def update_password(user , password):
-    conn = sqlite3.connect('todo.db')
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
     password = pbkdf2_sha256.hash(password)
-    update_query = "UPDATE User SET password = '{}' WHERE  username = '{}';"
+    update_query = "UPDATE user SET password = %s WHERE  username = %s;"
     
-    formatted = update_query.format(password , user)
-    conn.execute(formatted) 
+    val = (password , user)
+    mycursor = conn.cursor()
+    mycursor.execute(update_query , val) 
     conn.commit()
     conn.close()
     
 def pushotp(user , otp):
-    conn = sqlite3.connect('todo.db')
-    push = "INSERT INTO UserOTP(user , otp) VALUES('{}' , '{}');" 
-    formatted = push.format(user , otp)
-    conn.execute(formatted) 
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    push = "INSERT INTO userotp(user , otp) VALUES(%s , %s);" 
+    val = (user , otp)
+    mycursor = conn.cursor()
+    mycursor.execute(push , val) 
     conn.commit()
     conn.close()
     
 def getotp(user):
-    conn = sqlite3.connect('todo.db')
-    select = "SELECT otp FROM UserOTP WHERE user = '{}' ;" 
-    formatted = select.format(user)
-    otp = list(conn.execute(formatted))
-    if(len(otp) == 0):
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    select = "SELECT otp FROM userotp WHERE user = %s ;" 
+    val = (user , )
+    mycursor = conn.cursor()
+    mycursor.execute(select , val)
+    ls = []
+    for x in mycursor:
+        ls.append(x)
+        
+    if(len(ls) == 0):
         conn.close()
         return None
     else:
-        otp = otp[0][0]
+        otp = ls[0][0]
         conn.close()
         return otp  
     
 def popotp(user):
-    conn = sqlite3.connect('todo.db')
-    delete = "DELETE FROM UserOTP WHERE user = '{}' ;" 
-    formatted = delete.format(user)
-    conn.execute(formatted) 
+    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    delete = "DELETE FROM userotp WHERE user = %s ;" 
+    val = (user , )
+    mycursor = conn.cursor()
+    mycursor.execute(delete , val) 
     conn.commit()
     conn.close()
-    
     
     
     

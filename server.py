@@ -1,6 +1,7 @@
 from flask import Flask , render_template , request , redirect , url_for , session , flash
 from dbcheck import *
 from passlib.hash import pbkdf2_sha256
+from libgravatar import Gravatar
 import datetime
 from email_verifier import *
 import random
@@ -81,8 +82,12 @@ def profile():
         activity = user["activity"]
         date = str(datetime.datetime.now())
         date = date.split(' ')[0]
-        print(date)
-        return render_template('profile.htm' ,user=username,data=activity,date=date) 
+        email = user["email"]
+        print(email)
+        g = Gravatar(email)
+        avatar = g.get_image()
+        print(avatar)
+        return render_template('profile.htm' ,user=username,data=activity,date=date,avatar=avatar) 
     else:
         return redirect(url_for('login'))
 
@@ -159,7 +164,7 @@ def send_mail():
         popotp(user)
         link = "/reset/"+user
         otp = random.randint(1000 , 9999)
-        send_confirmation_mail(email , otp)
+        send_confirmation_mail(email , otp , 1)
         pushotp(user,otp)
         return redirect(link)
     else:
@@ -190,8 +195,15 @@ def reset():
         user = data["user"]
         rd = '/reset/'+user 
         return redirect(rd)
-        
-    
-    
+
+@app.route('/send-otp/<req>')
+def get_otp(req):
+    print("I am otp" , req)
+    email , otp = req.split('&')
+    send_confirmation_mail(email , otp , 2)
+    return '' , 204 
     
 
+
+if __name__ == '__main__':
+    app.run(debug=True)
