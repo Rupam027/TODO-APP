@@ -1,12 +1,16 @@
 from passlib.hash import pbkdf2_sha256
 from mysql import connector
-
+import os
     
     
 
 def insert(d): 
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
-    insert_query = "INSERT INTO user(username,Name,password ,email) VALUES(%s , %s , %s , %s);"
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
+    insert_query = "INSERT INTO users(username,Name,password ,email) VALUES(%s , %s , %s , %s);"
     d["password"] = pbkdf2_sha256.hash(d["password"])
     val = (d["user"] , d["name"] ,d["password"] , d["email"])
     mycursor = conn.cursor()
@@ -20,8 +24,12 @@ def insert(d):
 def check(user):
     
     d = {}
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
-    select_userquery = "SELECT * FROM user WHERE username = %s OR email = %s ;"
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
+    select_userquery = "SELECT * FROM users WHERE username = %s OR email = %s ;"
     select_activity  = "SELECT * FROM activity WHERE user = %s ;"
     val1 = (user , user) 
     val2 = (user ,)
@@ -53,7 +61,11 @@ def check(user):
         
 def update_activity(username , activity):
     
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
     insert_query = "INSERT INTO activity(Taskname , Urgency ,Deadline ,user) VALUES(%s , %s , %s , %s);"
     
     val = (activity["task"] , activity["urgency"] ,activity["deadline"] ,username)
@@ -64,7 +76,11 @@ def update_activity(username , activity):
     
     
 def delete_activity(username , index):
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
     delete_query = "DELETE FROM activity WHERE user=%s AND id = %s;"
     
     
@@ -75,9 +91,13 @@ def delete_activity(username , index):
     conn.close()
     
 def update_password(user , password):
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
     password = pbkdf2_sha256.hash(password)
-    update_query = "UPDATE user SET password = %s WHERE  username = %s;"
+    update_query = "UPDATE users SET password = %s WHERE  username = %s;"
     
     val = (password , user)
     mycursor = conn.cursor()
@@ -86,7 +106,11 @@ def update_password(user , password):
     conn.close()
     
 def pushotp(user , otp):
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
     push = "INSERT INTO userotp(user , otp) VALUES(%s , %s);" 
     val = (user , otp)
     mycursor = conn.cursor()
@@ -95,7 +119,11 @@ def pushotp(user , otp):
     conn.close()
     
 def getotp(user):
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
     select = "SELECT otp FROM userotp WHERE user = %s ;" 
     val = (user , )
     mycursor = conn.cursor()
@@ -113,7 +141,11 @@ def getotp(user):
         return otp  
     
 def popotp(user):
-    conn = connector.connect(host="localhost",user="root" ,password="Rupam2000$",database="taskdb")
+    hostname = os.getenv("HOST")
+    dbuser = os.getenv("DATABASE_USER")
+    dbpassword = os.getenv("DATABASE_PASSWORD")
+    dbname = os.getenv("DATABASE_NAME")
+    conn = connector.connect(host=hostname , user=dbuser , password=dbpassword , database=dbname)
     delete = "DELETE FROM userotp WHERE user = %s ;" 
     val = (user , )
     mycursor = conn.cursor()

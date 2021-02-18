@@ -204,6 +204,13 @@ def get_otp(req):
     return '' , 204 
     
 
-
+import os
 if __name__ == '__main__':
+    os.environ["HOST"] = "sql12.freesqldatabase.com" 
+    os.environ["DATABASE_USER"] = "sql12393651"
+    os.environ["DATABASE_PASSWORD"] = "YFCJsfc9eJ"
+    os.environ["DATABASE_NAME"] = "sql12393651"
     app.run(debug=True)
+    
+    
+    
