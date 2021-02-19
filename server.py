@@ -1,6 +1,6 @@
 from flask import Flask , render_template , request , redirect , url_for , session , flash
 from dbcheck import *
-from passlib.hash import pbkdf2_sha2
+from passlib.hash import pbkdf2_sha256
 import datetime
 from email_verifier import *
 import random
