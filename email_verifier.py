@@ -40,8 +40,7 @@ def send_confirmation_mail(user_email , otp , choice):
                 <br/> 
 
                 <center> <label style="font-size:50px;" > <u> {} </u> &nbsp; <u> {} </u> &nbsp; <u> {} </u> &nbsp; <u> {} </u> </label> </center>
-                <br/>
-                <center> <small> <em> This code is valid only for once . Incorrect Tries not allowed. </em> </small> </center>
+                
                 <br/>
                 <center> <img src="https://media.giphy.com/media/jwXoaQKjk9L1i8btPi/giphy.gif" width=50% height=50% alt="gif" /> </center>
                 </body>

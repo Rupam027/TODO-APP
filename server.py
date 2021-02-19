@@ -1,7 +1,6 @@
 from flask import Flask , render_template , request , redirect , url_for , session , flash
 from dbcheck import *
-from passlib.hash import pbkdf2_sha256
-from libgravatar import Gravatar
+from passlib.hash import pbkdf2_sha2
 import datetime
 from email_verifier import *
 import random
@@ -83,11 +82,8 @@ def profile():
         date = str(datetime.datetime.now())
         date = date.split(' ')[0]
         email = user["email"]
-        print(email)
-        g = Gravatar(email)
-        avatar = g.get_image()
-        print(avatar)
-        return render_template('profile.htm' ,user=username,data=activity,date=date,avatar=avatar) 
+        
+        return render_template('profile.htm' ,user=username,data=activity,date=date) 
     else:
         return redirect(url_for('login'))
 
