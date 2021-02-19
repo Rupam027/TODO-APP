@@ -2,7 +2,6 @@ click==7.1.2
 Flask==1.1.2
 itsdangerous==1.1.0
 Jinja2==2.11.3
-libgravatar==0.2.4
 MarkupSafe==1.1.1
 mysql-connector-python==8.0.23
 passlib==1.7.4
