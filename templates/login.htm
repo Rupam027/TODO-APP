@@ -22,6 +22,21 @@ background-attachment : scroll ;
 }
 
 </style>
+<script type="text/javascript">
+function cred_check()
+{
+
+
+   document.getElementById("loading").style.display="block" ;
+   document.getElementById("login").style.display = "None" ; 
+   document.getElementById("login").type = "submit" ;
+   document.getElementById("form1").action= "/check" ;
+	
+
+}
+
+</script>
+
 
 </head> 
 
@@ -47,7 +62,7 @@ background-attachment : scroll ;
 </nav>  
 
 
-<form   style="margin:auto; width:500px; padding:10px 10px 10px 10px; box-shadow : 5px 10px 18px; background-color : #E6E6E6;" action = "/check"  method = "post" >
+<form  id="form1" style="margin:auto; width:500px; padding:10px 10px 10px 10px; box-shadow : 5px 10px 18px; background-color : #E6E6E6;"   method = "post" >
 
 {% for message in get_flashed_messages() %}
 <label class = "text-danger text-uppercase"> {{message}} </label> 
@@ -89,13 +104,19 @@ background-attachment : scroll ;
 
 </div>
 
-<input class="btn btn-success btn-block"  type="submit"  value = "LOGIN" /> 
+<button class="btn btn-success btn-block" id="login" type="button" onclick="cred_check()" style="display:{{disp2}} ;" > LOGIN </button> 
+
+<div id="loading" style="display:{{disp1}} ;" >
+<center> <img src="https://media.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif" alt="." width="100px" height="100px" /> </center>
+<figcaption> CHECKING CREDENTIALS AND LOGGING YOU IN ...</figcaption>
+</div>
 
 <hr>
 
 <center> <a href="/forgotpassword" class="btn-link" > FORGOT PASSWORD </a> </center> 
 
 </form>  
+
 
 
 
