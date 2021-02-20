@@ -25,11 +25,11 @@ background-attachment : scroll ;
 
 </head> 
 
-<body class="image-setter" style="font-family: 'Reggae One', cursive;  background-image : url('/static/pic.jpeg');">
+<body class="image-setter" style="font-family: 'Reggae One', cursive; padding:10px 10px 10px 10px;">
 
 
-<div class="container-fluid-lg container-fluid-sm container-fluid-md" > 
-<header class="h2" style="padding-bottom : 100px" > <center style="background-color : #FF0000;">  TODO'S FOR YOUR DODO'S  </center> </header> 
+
+<header class="h2" style="width:100%; background-color : #FF0000;" > <center>  TODO'S FOR YOUR DODO'S  </center> </header> 
 
 <nav class="navbar navbar-dark navbar-expand-lg"> 
 <button class="navbar-toggler" data-toggle="collapse" data-target = "#mynavbar" aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,14 +46,14 @@ background-attachment : scroll ;
 
 </nav>  
 
+<div class="d-flex justify-content-sm-center justify-content-lg-center"> 
+<form  class="p-2" style="box-shadow : 5px 10px 18px; background-color : #E6E6E6;" action = "/check"  method = "post" > 
  
-<form style=" margin: auto ; width : 500px; box-shadow : 5px 10px 18px;  padding-left: 10px ;  padding-right: 10px ; padding-bottom : 10px; background-color : #E6E6E6;" action = "/check"  method = "post" > 
- 
-<div> 
+
 {% for message in get_flashed_messages() %}
 <label class = "text-danger text-uppercase"> {{message}} </label> 
-{% endfor %}
-</div> 
+{% endfor %} 
+
 
 <br/>
 
@@ -97,9 +97,8 @@ background-attachment : scroll ;
 <center> <a href="/forgotpassword" class="btn-link" > FORGOT PASSWORD </a> </center> 
 
 </form>  
-
-
 </div>
+
 
 
 </body> 
